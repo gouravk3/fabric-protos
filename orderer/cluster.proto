@@ -24,6 +24,8 @@ message StepRequest {
         ConsensusRequest consensus_request = 1;
         // submit_request is a relay of a transaction.
         SubmitRequest submit_request = 2;
+
+        SubmitPayload submit_payload = 3;
     }
 }
 
@@ -51,6 +53,19 @@ message SubmitRequest {
     // content is the fabric transaction
     // that is forwarded to the cluster member.
     common.Envelope payload = 3;
+}
+
+// SubmitPayload wraps a transaction to be sent for ordering.
+message SubmitPayload {
+    string channel = 1;
+    // last_validation_seq denotes the last
+    // configuration sequence at which the
+    // sender validated this message.
+    uint64 last_validation_seq = 2;
+    // content is the fabric transaction
+    // that is forwarded to the cluster member.
+    common.Envelope payload = 3;
+    string txn_id = 4;
 }
 
 // SubmitResponse returns a success
